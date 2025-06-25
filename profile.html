@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile - BE LEARN</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <div class="main-container" id="profile-container">
+      <header class="profile-header-block">
+        <a href="home.html" class="back-button"
+          ><i class="bi bi-arrow-left"></i
+        ></a>
+        <div class="title">Profile</div>
+      </header>
+
+      <main>
+        <div class="profile-body">
+          <div class="profile-pic-wrapper">
+            <img
+              src="https://i.pravatar.cc/100"
+              class="profile-pic"
+              alt="Foto Profil"
+            />
+            <button
+              class="edit-pic-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#photoModal"
+            >
+              <i class="bi bi-pencil-fill"></i>
+            </button>
+          </div>
+          <h4 class="name">Hanna Namira</h4>
+          <p class="email">hanna@gmail.com</p>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-header">Pengaturan</div>
+          <div class="list-group list-group-flush">
+            <div class="list-group-item">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-gear-fill me-3"></i>
+                <span
+                  >Mode
+                  <small class="d-block text-muted">Dark & Light</small></span
+                >
+              </div>
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="darkModeToggle"
+                />
+              </div>
+            </div>
+            <a href="#" class="list-group-item">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-key-fill me-3"></i>
+                <span>Ubah Kata Sandi</span>
+              </div>
+              <i class="bi bi-chevron-right"></i>
+            </a>
+            <a href="#" class="list-group-item">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-translate me-3"></i>
+                <span>Bahasa</span>
+              </div>
+              <i class="bi bi-chevron-right"></i>
+            </a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div
+      class="modal fade"
+      id="photoModal"
+      tabindex="-1"
+      aria-labelledby="photoModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="photoModalLabel">
+              Ganti Foto Profil
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Pilih sumber foto Anda:</p>
+            <input type="file" class="form-control" />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Batal
+            </button>
+            <button type="button" class="btn btn-primary">Simpan</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const darkModeToggle = document.getElementById("darkModeToggle");
+      const profileContainer = document.getElementById("profile-container");
+
+      darkModeToggle.addEventListener("change", () => {
+        // Menambah atau menghapus kelas 'dark-mode' HANYA pada container halaman ini
+        profileContainer.classList.toggle("dark-mode");
+      });
+    </script>
+  </body>
+</html>

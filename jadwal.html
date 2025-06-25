@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jadwal Belajar - BE LEARN</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <header class="app-header">
+        <div class="profile-icon">
+          <a href="profile.html"><i class="bi bi-person-circle"></i></a>
+        </div>
+        <a href="home.html" class="logo-container"
+          ><img
+            src="https://i.imgur.com/your-placeholder.png"
+            alt="Logo"
+          /><span>BE LEARN</span></a
+        >
+        <div style="width: 34px"></div>
+      </header>
+
+      <main class="content-padding">
+        <div class="calendar-container">
+          <div class="calendar-header">
+            <button id="prev-month-btn" class="month-nav-btn">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <h5 id="month-year-title"></h5>
+            <button id="next-month-btn" class="month-nav-btn">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+          <div class="calendar-weekdays">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+          </div>
+          <div class="calendar-dates" id="calendar-dates-grid"></div>
+        </div>
+
+        <div class="details-container">
+          <div class="section-header mt-4">
+            <h5 id="details-date-title"></h5>
+          </div>
+          <div id="details-list"></div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const monthYearTitle = document.getElementById("month-year-title");
+      const calendarDatesGrid = document.getElementById("calendar-dates-grid");
+      const prevMonthBtn = document.getElementById("prev-month-btn");
+      const nextMonthBtn = document.getElementById("next-month-btn");
+      const detailsDateTitle = document.getElementById("details-date-title");
+      const detailsList = document.getElementById("details-list");
+
+      let currentDate = new Date();
+
+      // --- DATA JADWAL CONTOH ---
+      const events = {
+        "8/7/2025": ["Belajar Keuangan"], // Format: D/M/YYYY
+        "9/7/2025": ["Belajar Matematika", "Latihan Fisika"],
+        "18/7/2025": ["Ujian Bahasa Inggris"],
+      };
+
+      const renderCalendar = () => {
+        const date = new Date(currentDate);
+        date.setDate(1);
+        const firstDayIndex = date.getDay();
+        const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        const lastDayIndex = lastDay.getDay();
+        const lastDayDate = lastDay.getDate();
+        const prevLastDay = new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          0
+        ).getDate();
+        const nextDays = 7 - lastDayIndex - 1;
+
+        const months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        monthYearTitle.innerHTML = `${
+          months[date.getMonth()]
+        } ${date.getFullYear()}`;
+
+        let datesHTML = "";
+
+        for (let x = firstDayIndex; x > 0; x--) {
+          datesHTML += `<div class="date-item prev-date">${
+            prevLastDay - x + 1
+          }</div>`;
+        }
+
+        for (let i = 1; i <= lastDayDate; i++) {
+          let todayClass =
+            i === new Date().getDate() &&
+            date.getMonth() === new Date().getMonth() &&
+            date.getFullYear() === new Date().getFullYear()
+              ? "is-today"
+              : "";
+          let eventKey = `${i}/${date.getMonth() + 1}/${date.getFullYear()}`;
+          let eventClass = events[eventKey] ? "has-event" : "";
+          datesHTML += `<div class="date-item ${todayClass} ${eventClass}" data-date="${i}">${i}</div>`;
+        }
+
+        for (let j = 1; j <= nextDays; j++) {
+          datesHTML += `<div class="date-item next-date">${j}</div>`;
+        }
+
+        calendarDatesGrid.innerHTML = datesHTML;
+        attachDateListeners();
+        updateDetails(new Date().getDate());
+      };
+
+      const attachDateListeners = () => {
+        document
+          .querySelectorAll(".date-item:not(.prev-date):not(.next-date)")
+          .forEach((item) => {
+            item.addEventListener("click", () => {
+              document
+                .querySelectorAll(".date-item.is-selected")
+                .forEach((selected) =>
+                  selected.classList.remove("is-selected")
+                );
+              item.classList.add("is-selected");
+              updateDetails(item.dataset.date);
+            });
+          });
+      };
+
+      const updateDetails = (day) => {
+        const selectedDate = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          day
+        );
+        const options = {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        };
+        detailsDateTitle.innerHTML = `Details - ${selectedDate.toLocaleDateString(
+          "id-ID",
+          options
+        )}`;
+
+        let eventKey = `${selectedDate.getDate()}/${
+          selectedDate.getMonth() + 1
+        }/${selectedDate.getFullYear()}`;
+        detailsList.innerHTML = "";
+
+        if (events[eventKey]) {
+          events[eventKey].forEach((eventText) => {
+            const eventElement = document.createElement("div");
+            eventElement.classList.add("event-item");
+            eventElement.innerHTML = `<span class="event-dot"></span>${eventText}`;
+            detailsList.appendChild(eventElement);
+          });
+        } else {
+          detailsList.innerHTML = `<p class="text-secondary">Tidak ada jadwal untuk hari ini.</p>`;
+        }
+      };
+
+      prevMonthBtn.addEventListener("click", () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        renderCalendar();
+      });
+
+      nextMonthBtn.addEventListener("click", () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalendar();
+      });
+
+      renderCalendar();
+    </script>
+  </body>
+</html>

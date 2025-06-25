@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cek Catatan - BE LEARN</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <header class="app-header">
+        <div class="profile-icon">
+          <a href="profile.html"><i class="bi bi-person-circle"></i></a>
+        </div>
+        <a href="home.html" class="logo-container">
+          <img src="https://i.imgur.com/your-placeholder.png" alt="Logo" />
+          <span>BE LEARN</span>
+        </a>
+        <div style="width: 34px"></div>
+      </header>
+
+      <main class="content-padding">
+        <div class="search-bar">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Cari catatanmu..."
+          />
+          <i class="bi bi-search search-icon"></i>
+        </div>
+
+        <select class="form-select sort-dropdown mb-4">
+          <option selected>Urutkan berdasarkan...</option>
+          <option value="1">Terbaru</option>
+          <option value="2">Terlama</option>
+          <option value="3">Alfabet</option>
+        </select>
+
+        <div class="note-card">
+          <img src="https://i.imgur.com/your-placeholder.png" alt="Keuangan" />
+          <div class="note-content">
+            <div>
+              <h5 class="note-title">Keuangan</h5>
+              <p class="note-date">Terakhir diubah 26-03-2025</p>
+            </div>
+            <div class="note-actions d-flex gap-2">
+              <button class="btn btn-sm btn-primary btn-buat-soal">
+                Buat Soal
+              </button>
+              <a
+                href="latihan-soal.html"
+                class="btn btn-sm btn-secondary disabled btn-kerjakan"
+                >Kerjakan</a
+              >
+            </div>
+          </div>
+          <button class="btn-fav-note"><i class="bi bi-heart"></i></button>
+        </div>
+
+        <div class="note-card">
+          <img
+            src="https://i.imgur.com/your-placeholder.png"
+            alt="Matematika"
+          />
+          <div class="note-content">
+            <div>
+              <h5 class="note-title">Matematika</h5>
+              <p class="note-date">Terakhir diubah 02-04-2025</p>
+            </div>
+            <div class="note-actions d-flex gap-2">
+              <button class="btn btn-sm btn-primary btn-buat-soal">
+                Buat Soal
+              </button>
+              <a
+                href="latihan-soal.html"
+                class="btn btn-sm btn-secondary disabled btn-kerjakan"
+                >Kerjakan</a
+              >
+            </div>
+          </div>
+          <button class="btn-fav-note"><i class="bi bi-heart"></i></button>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      document.querySelectorAll(".btn-buat-soal").forEach((button) => {
+        button.addEventListener("click", function () {
+          const noteActions = this.closest(".note-actions");
+          const btnKerjakan = noteActions.querySelector(".btn-kerjakan");
+
+          // Menonaktifkan tombol "Buat Soal"
+          this.classList.remove("btn-primary");
+          this.classList.add("btn-secondary", "disabled");
+
+          // Mengaktifkan tombol "Kerjakan"
+          btnKerjakan.classList.remove("disabled", "btn-secondary");
+          btnKerjakan.classList.add("btn-primary");
+        });
+      });
+    </script>
+  </body>
+</html>
